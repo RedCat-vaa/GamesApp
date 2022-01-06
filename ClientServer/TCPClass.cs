@@ -9,10 +9,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
 
-
 namespace ClientServer
 {
-
     public class ServerEventArgs
     {
         public string Message { get; set; }
@@ -25,8 +23,7 @@ namespace ClientServer
     public enum AuthOrReg
     {
         Auth,
-        Reg,
-        Test
+        Reg
     }
     public class ClientApp
     {
@@ -206,7 +203,7 @@ namespace ClientServer
             client.Close();
         }
         public void startServer()
-        {
+        {            
             try
             {
                 server = new TcpListener(IPAddress.Any, 11000);
