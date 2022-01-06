@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\ball.jpg" />
+    <None Remove="Resources\BullsAndCow.jpeg" />
+    <None Remove="Resources\football.jpg" />
+    <None Remove="Resources\Football.json" />
+    <None Remove="Resources\InfoServer.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ClientServer\ClientServer.csproj" />
+    <ProjectReference Include="..\DBLibrary\DBLibrary.csproj" />
+    <ProjectReference Include="..\GameLibrary\GameLibrary.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\ball.jpg" />
+    <Resource Include="Resources\BullsAndCow.jpeg" />
+    <Resource Include="Resources\InfoServer.json" />
+    <Resource Include="Resources\football.jpg" />
+    <Resource Include="Resources\Football.json" />
+  </ItemGroup>
+
+</Project>
