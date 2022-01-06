@@ -9,10 +9,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Threading;
 
-
 namespace ClientServer
 {
-
     public class ServerEventArgs
     {
         public string Message { get; set; }
@@ -65,16 +63,6 @@ namespace ClientServer
                     stringConnection.Clear();
                     stringConnection.Append(Newtonsoft.Json.JsonConvert.SerializeObject(dataConnection));
                     sendServer = Encoding.UTF8.GetBytes(stringConnection.ToString());
-
-
-                    /*if (typeConnection == AuthOrReg.Auth)
-                    {
-                       sendServer = Encoding.UTF8.GetBytes($"{login}_|_{password}_|_Auth");
-                    }    
-                    else
-                    {
-                        sendServer = Encoding.UTF8.GetBytes($"{login}_|_{password}_|_Reg");
-                    }*/
 
                     currentStream.Write(sendServer, 0, sendServer.Length);
 
@@ -149,7 +137,6 @@ namespace ClientServer
             server.Stop();
         }
 
-
         public async void startServerAsync()
         {
             await Task.Run(startServer);
@@ -211,15 +198,12 @@ namespace ClientServer
             }
 
             byte[] dataResponse = Encoding.UTF8.GetBytes(Response);
-
             stream.Write(dataResponse, 0, dataResponse.Length);
-
             stream.Close();
             client.Close();
         }
         public void startServer()
-        {
-            
+        {            
             try
             {
                 server = new TcpListener(IPAddress.Any, 11000);
@@ -260,8 +244,7 @@ namespace ClientServer
             finally
             {
                 server.Stop();
-            }
-              
+            }         
         }
     }
 }
