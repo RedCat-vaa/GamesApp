@@ -33,6 +33,7 @@ namespace GamesApp
             Client.IsChecked = true;
         }
 
+        #region Authentication
         private void OpenUser_Click(object sender, RoutedEventArgs e)
         {
             Users? FindUser = null;
@@ -100,6 +101,7 @@ namespace GamesApp
             }
                
         }
+        #endregion
 
         private void RegUser_Click(object sender, RoutedEventArgs e)
         {
