@@ -10,8 +10,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GamesApp", "GamesApp\GamesA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBLibrary", "DBLibrary\DBLibrary.csproj", "{34B54F61-E4A7-4D66-8D23-9EB580FFA502}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GameLibrary", "GameLibrary\GameLibrary.csproj", "{9F1A18AE-C792-4F73-B50F-3E6E25345878}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientServer", "ClientServer\ClientServer.csproj", "{17BB40F5-5EA6-43F4-B3D7-16071A70F1B6}"
 EndProject
 Global
@@ -28,10 +26,6 @@ Global
 		{34B54F61-E4A7-4D66-8D23-9EB580FFA502}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34B54F61-E4A7-4D66-8D23-9EB580FFA502}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34B54F61-E4A7-4D66-8D23-9EB580FFA502}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9F1A18AE-C792-4F73-B50F-3E6E25345878}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9F1A18AE-C792-4F73-B50F-3E6E25345878}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9F1A18AE-C792-4F73-B50F-3E6E25345878}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9F1A18AE-C792-4F73-B50F-3E6E25345878}.Release|Any CPU.Build.0 = Release|Any CPU
 		{17BB40F5-5EA6-43F4-B3D7-16071A70F1B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{17BB40F5-5EA6-43F4-B3D7-16071A70F1B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{17BB40F5-5EA6-43F4-B3D7-16071A70F1B6}.Release|Any CPU.ActiveCfg = Release|Any CPU

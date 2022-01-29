@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using GameLibrary;
 using DBLibrary;
 
 namespace GamesApp
@@ -27,6 +26,7 @@ namespace GamesApp
             MainMenuCommand = new RoutedCommand("MainMenuCommand", typeof(UserWindow));
         }
     }
+
 
     public partial class UserWindow : Window
     {
@@ -52,8 +52,6 @@ namespace GamesApp
             listGames.Add(new Games("Футбольная викторина", @"Resources\ball.jpg"));
             GamesList.ItemsSource = listGames;
             Games.ID = 1;
-
-
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -74,19 +72,7 @@ namespace GamesApp
 
         private void CheckNumber_Click(object sender, RoutedEventArgs e)
         {
-
-            ResultBullsAndCows newResult = BullsCows.Value.CompareNumber(Game1Input.Text);
-            if (newResult.result)
-            {
-                Game1Info.Text = Game1Info.Text + newResult.TextView + Environment.NewLine;
-                Game1Info.Text = Game1Info.Text + "Вы выиграли!" + Environment.NewLine;
-                CheckNumber.IsEnabled = false;
-            }
-            else
-            {
-                Game1Info.Text = Game1Info.Text + newResult.TextView + Environment.NewLine;
-            }
-
+            BullsCows.Value.CompareNumber(Game1Input.Text, this);
         }
 
         private void NewGame1_Click(object sender, RoutedEventArgs e)
@@ -119,10 +105,6 @@ namespace GamesApp
                     MainMenu.Visibility = System.Windows.Visibility.Hidden;
                     Game2.Visibility = System.Windows.Visibility.Visible;
                 }
-                else
-                {
-
-                }
             }
         }
 
@@ -138,90 +120,26 @@ namespace GamesApp
             try
             {
                 ConfigUrlModel q1 = quiz.configUrls[FootballQuiz.index];
-                if (ask1.IsChecked == true)
-                {
-                    if ((string)ask1.Content == q1.Ask)
-                    {
-                        quiz.RightAsks++;
-                    }
-                }
-                else if (ask2.IsChecked == true)
-                {
-                    if ((string)ask2.Content == q1.Ask)
-                    {
-                        quiz.RightAsks++;
-                    }
-                }
-                else if (ask3.IsChecked == true)
-                {
-                    if ((string)ask3.Content == q1.Ask)
-                    {
-                        quiz.RightAsks++;
-                    }
-                }
-                else if (ask4.IsChecked == true)
-                {
-                    if ((string)ask4.Content == q1.Ask)
-                    {
-                        quiz.RightAsks++;
-                    }
-                }
-                quiz.AllAsks++;
+                AskStruct askStruct = new AskStruct(ask1.IsChecked, ask2.IsChecked, ask3.IsChecked, ask4.IsChecked,
+                    (string)ask1.Content, (string)ask2.Content, (string)ask3.Content, (string)ask4.Content);
+                quiz.NextQuestion(askStruct, q1);
                 AllAsks.Text = Convert.ToString(quiz.AllAsks);
                 RightAsks.Text = Convert.ToString(quiz.RightAsks);
                 FootballQuiz.index++;
                 CountAsk.Text = $"Вопрос {FootballQuiz.index} из {quiz.configUrls.Count}";
 
                 ConfigUrlModel q = quiz.configUrls[FootballQuiz.index];
-                FullAsks(true, q);
+                FootballQuiz.FullAsks(this, true, q);
             }
             catch
             {
-                FullAsks(false);
-            }
-
-        }
-
-        private void FullAsks(bool CorrectTry, ConfigUrlModel q = null)
-        {
-            if (CorrectTry)
-            {
-                Question.Text = q.Question;
-                ask1.Content = q.Ask1;
-                ask2.Content = q.Ask2;
-                ask3.Content = q.Ask3;
-                ask4.Content = q.Ask4;
-            }
-            else
-            {
-                ask1.Content = "";
-                ask2.Content = "";
-                ask3.Content = "";
-                ask4.Content = "";
-                ask1.Visibility = System.Windows.Visibility.Hidden;
-                ask2.Visibility = System.Windows.Visibility.Hidden;
-                ask3.Visibility = System.Windows.Visibility.Hidden;
-                ask4.Visibility = System.Windows.Visibility.Hidden;
+                FootballQuiz.FullAsks(this,false);
             }
         }
+
         private void NewGame2_Click(object sender, RoutedEventArgs e)
         {
-            quiz = new FootballQuiz();
-            try
-            {
-                ConfigUrlModel q = quiz.configUrls[FootballQuiz.index];
-                RightAsks.Text = "0"; AllAsks.Text = "0"; CountAsk.Text = ""; Question.Text = "";
-                CountAsk.Text = $"Вопрос {FootballQuiz.index} из {quiz.configUrls.Count}";
-                FullAsks(true, q);
-                ask1.Visibility = System.Windows.Visibility.Visible;
-                ask2.Visibility = System.Windows.Visibility.Visible;
-                ask3.Visibility = System.Windows.Visibility.Visible;
-                ask4.Visibility = System.Windows.Visibility.Visible;
-            }
-            catch
-            {
-                FullAsks(false);
-            }
+            quiz = FootballQuiz.NewGame(this);
         }
     }
 

@@ -1,9 +1,12 @@
-using System;
-using Newtonsoft.Json;
+Ôªøusing System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.IO;
+using Newtonsoft.Json;
 
-namespace GameLibrary
+namespace GamesApp
 {
     public struct ResultBullsAndCows
     {
@@ -53,7 +56,7 @@ namespace GameLibrary
             }
         }
 
-        public ResultBullsAndCows CompareNumber(string num)
+        public void CompareNumber(string num, UserWindow userWin)
         {
             try
             {
@@ -61,9 +64,9 @@ namespace GameLibrary
             }
             catch
             {
-                return new ResultBullsAndCows(false, "¬˚ ‚‚ÂÎË ÌÂ ˜ËÒÎÓ!");
+                userWin.Game1Info.Text = userWin.Game1Info.Text + "–í—ã –≤–≤–µ–ª–∏ –Ω–µ —á–∏—Å–ª–æ!" + Environment.NewLine;
             }
-            Bulls = 0;Cows = 0;
+            Bulls = 0; Cows = 0;
             string strNum = num;
             for (int i = 0; i < strNum.Length; i++)
             {
@@ -73,10 +76,9 @@ namespace GameLibrary
                     {
                         Bulls = 0;
                         Cows = 0;
-                        return new ResultBullsAndCows(false, "¬ ˜ËÒÎÂ ÌÂ ‰ÓÎÊÌÓ ·˚Ú¸ ÔÓ‚ÚÓˇ˛˘ËıÒˇ ˜ËÒÂÎ!");
+                        userWin.Game1Info.Text = userWin.Game1Info.Text + "–í —á–∏—Å–ª–µ –Ω–µ –¥–æ–ª–∂–Ω–æ –±—ã—Ç—å –ø–æ–≤—Ç–æ—Ä—è—é—â–∏—Ö—Å—è —á–∏—Å–µ–ª!" + Environment.NewLine;
                     }
                 }
-
 
                 for (int ii = 0; ii < strNum.Length; ii++)
                 {
@@ -96,11 +98,13 @@ namespace GameLibrary
             tries++;
             if (Bulls == 4)
             {
-                return new ResultBullsAndCows(true, $"œÓÔ˚ÚÍ‡ {tries} - {num}: ¡˚ÍÓ‚ - {Bulls}, ÍÓÓ‚ - {Cows}");
+                userWin.Game1Info.Text = userWin.Game1Info.Text + $"–ü–æ–ø—ã—Ç–∫–∞ {tries} - {num}: –ë—ã–∫–æ–≤ - {Bulls}, –∫–æ—Ä–æ–≤ - {Cows}" + Environment.NewLine;
+                userWin.Game1Info.Text = userWin.Game1Info.Text + "–í—ã –≤—ã–∏–≥—Ä–∞–ª–∏!" + Environment.NewLine;
+                userWin.CheckNumber.IsEnabled = false;
             }
             else
             {
-                return new ResultBullsAndCows(false, $"œÓÔ˚ÚÍ‡ {tries} - {num}: ¡˚ÍÓ‚ - {Bulls}, ÍÓÓ‚ - {Cows}");
+                userWin.Game1Info.Text = userWin.Game1Info.Text + $"–ü–æ–ø—ã—Ç–∫–∞ {tries} - {num}: –ë—ã–∫–æ–≤ - {Bulls}, –∫–æ—Ä–æ–≤ - {Cows}" + Environment.NewLine;
             }
 
         }
@@ -155,8 +159,8 @@ namespace GameLibrary
         public int RightAsks { get; set; }
         public List<ConfigUrlModel>? configUrls { get; set; }
         public ConfigUrlsModel result { get; set; }
-        
-        public void NextQuestion(AskStruct askStruct,   ConfigUrlModel q1)
+
+        public void NextQuestion(AskStruct askStruct, ConfigUrlModel q1)
         {
             if (askStruct.Ask1 == true)
             {
@@ -206,5 +210,50 @@ namespace GameLibrary
             configUrls = Newtonsoft.Json.JsonConvert.DeserializeObject<List<ConfigUrlModel>>(json);
             result = new ConfigUrlsModel { ConfigUrls = configUrls };
         }
+
+        public static void FullAsks(UserWindow userWin, bool CorrectTry, ConfigUrlModel q = null)
+        {
+            if (CorrectTry)
+            {
+                userWin.Question.Text = q.Question;
+                userWin.ask1.Content = q.Ask1;
+                userWin.ask2.Content = q.Ask2;
+                userWin.ask3.Content = q.Ask3;
+                userWin.ask4.Content = q.Ask4;
+            }
+            else
+            {
+                userWin.ask1.Content = "";
+                userWin.ask2.Content = "";
+                userWin.ask3.Content = "";
+                userWin.ask4.Content = "";
+                userWin.ask1.Visibility = System.Windows.Visibility.Hidden;
+                userWin.ask2.Visibility = System.Windows.Visibility.Hidden;
+                userWin.ask3.Visibility = System.Windows.Visibility.Hidden;
+                userWin.ask4.Visibility = System.Windows.Visibility.Hidden;
+            }
+        }
+
+        public static FootballQuiz NewGame(UserWindow userWin)
+        {
+            FootballQuiz quiz = new FootballQuiz();
+            try
+            {
+                ConfigUrlModel q = quiz.configUrls[FootballQuiz.index];
+                userWin.RightAsks.Text = "0"; userWin.AllAsks.Text = "0"; userWin.CountAsk.Text = ""; userWin.Question.Text = "";
+                userWin.CountAsk.Text = $"–í–æ–ø—Ä–æ—Å {FootballQuiz.index} –∏–∑ {quiz.configUrls.Count}";
+                FootballQuiz.FullAsks(userWin, true, q);
+                userWin.ask1.Visibility = System.Windows.Visibility.Visible;
+                userWin.ask2.Visibility = System.Windows.Visibility.Visible;
+                userWin.ask3.Visibility = System.Windows.Visibility.Visible;
+                userWin.ask4.Visibility = System.Windows.Visibility.Visible;
+            }
+            catch
+            {
+                FootballQuiz.FullAsks(userWin, false);
+            }
+            return quiz;
+        }
     }
+
 }

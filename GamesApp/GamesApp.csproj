@@ -18,7 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\ClientServer\ClientServer.csproj" />
     <ProjectReference Include="..\DBLibrary\DBLibrary.csproj" />
-    <ProjectReference Include="..\GameLibrary\GameLibrary.csproj" />
   </ItemGroup>
 
   <ItemGroup>
